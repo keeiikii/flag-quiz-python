@@ -74,6 +74,39 @@ python app.py
 http://localhost:5000
 ```
 
+## 🌐 デプロイ
+
+### Renderデプロイ
+
+1. **Renderアカウント作成**: [render.com](https://render.com)でアカウント作成
+
+2. **新しいWebサービス作成**:
+   - "New" → "Web Service"
+   - GitHubリポジトリを接続
+   - 以下の設定を入力：
+
+3. **Render設定**:
+   ```
+   Name: flag-quiz-python
+   Environment: Python 3
+   Build Command: pip install -r requirements.txt
+   Start Command: gunicorn --bind 0.0.0.0:$PORT app:app
+   ```
+
+4. **環境変数設定**:
+   ```
+   GEMINI_API_KEY = your-gemini-api-key-here
+   FLASK_ENV = production
+   SECRET_KEY = your-secret-key-here
+   ```
+
+5. **デプロイ実行**: "Create Web Service"をクリック
+
+### ライブデモ
+- 🔗 **デモURL**: https://flag-quiz-python.onrender.com *(デプロイ後に更新)*
+
+```
+
 ## 🛠️ 技術スタック
 
 ### バックエンド

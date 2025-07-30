@@ -6,8 +6,9 @@ from flask import Flask, render_template, request, session, redirect, url_for, f
 
 # Flaskアプリケーションの初期化
 app = Flask(__name__)
-# セッション管理用の秘密鍵を設定（毎回異なるランダムキー）
-app.secret_key = os.urandom(24)
+# セッション管理用の秘密鍵を設定
+# 本番環境では環境変数、開発環境では固定値を使用
+app.secret_key = os.getenv('SECRET_KEY', os.urandom(24))
 
 # Gemini AI APIの設定
 # 環境変数からAPIキーを取得して設定
@@ -475,13 +476,18 @@ if __name__ == '__main__':
     - ポート: 5000
     - デバッグモード: 有効
     """
-    print("🚀 国旗クイズゲーム起動中...")
-    print("📍 アクセスURL: http://localhost:5000")
-    print("🔧 デバッグモード: 有効")
-    print("⚠️  本番環境では debug=False に設定してください")
-    
     try:
-        app.run(debug=True)
+        # 本番環境かどうかを判定（Renderでは PORT 環境変数が設定される）
+        port = int(os.getenv('PORT', 5000))
+        debug = os.getenv('FLASK_ENV') != 'production'
+        
+        if debug:
+            print("🚀 国旗クイズゲーム起動中...")
+            print(f"📍 アクセスURL: http://localhost:{port}")
+            print("🔧 デバッグモード: 有効")
+            print("⚠️  本番環境では debug=False に設定してください")
+        
+        app.run(host='0.0.0.0', port=port, debug=debug)
     except Exception as e:
         print(f"❌ アプリケーション起動エラー: {type(e).__name__}: {e}")
         print("🔍 GEMINI_API_KEY環境変数が設定されているか確認してください")
