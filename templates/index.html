@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>国旗クイズゲーム</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🏴 国旗クイズゲーム 🌍</h1>
+            <p class="subtitle">世界の国旗を当ててみよう！</p>
+        </header>
+
+        <!-- メッセージ表示 -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="message message-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <main class="main-content">
+            <div class="game-info">
+                <h2>ゲームルール</h2>
+                <ul>
+                    <li>表示された国旗の国名を当ててください</li>
+                    <li>回答は<strong>2回まで</strong>可能です</li>
+                    <li>質問は<strong>10回まで</strong>可能です（Yes/No形式のみ）</li>
+                    <li>ヒントは<strong>3種類まで</strong>取得できます</li>
+                </ul>
+            </div>
+
+            <div class="start-section">
+                <form method="POST" action="{{ url_for('new_game') }}">
+                    <button type="submit" class="btn btn-primary btn-large">
+                        🚀 新しいゲーム開始
+                    </button>
+                </form>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>プログラミング学習用プロジェクト</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>国旗クイズゲーム - プレイ中</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🏴 国旗クイズゲーム 🌍</h1>
+        </header>
+
+        <!-- メッセージ表示 -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="message message-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <main class="game-layout">
+            <!-- 左パネル: 国旗と統計 -->
+            <div class="left-panel">
+                <div class="flag-section">
+                    <div class="flag-container">
+                        <img src="{{ session.country_flag }}" alt="国旗" class="flag-image">
+                        <p class="flag-caption">この国はどこでしょう？</p>
+                    </div>
+                </div>
+
+                <div class="stats-section">
+                    <div class="stat-item">
+                        <span class="stat-label">残り回答:</span>
+                        <span class="stat-value">{{ session.answers_left }}/2</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">残り質問:</span>
+                        <span class="stat-value">{{ session.questions_left }}/10</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">ヒント:</span>
+                        <span class="stat-value">{{ 3 - session.hints_used|length }}/3</span>
+                    </div>
+                </div>
+
+                <div class="control-section">
+                    <form method="POST" action="{{ url_for('reset_game') }}">
+                        <button type="submit" class="btn btn-secondary">
+                            🔄 ゲームリセット
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- 右パネル: ゲーム操作 -->
+            <div class="right-panel">
+                <!-- ヒントセクション -->
+                <section class="game-section">
+                    <h3>💡 ヒント</h3>
+                    <div class="hint-buttons">
+                        <form method="POST" action="{{ url_for('get_hint') }}" style="display: inline;">
+                            <input type="hidden" name="hint_type" value="主食">
+                            <button type="submit" class="btn btn-hint" 
+                                    {% if '主食' in session.hints_used %}disabled{% endif %}>
+                                🍚 主食
+                            </button>
+                        </form>
+                        
+                        <form method="POST" action="{{ url_for('get_hint') }}" style="display: inline;">
+                            <input type="hidden" name="hint_type" value="面積">
+                            <button type="submit" class="btn btn-hint"
+                                    {% if '面積' in session.hints_used %}disabled{% endif %}>
+                                📏 面積
+                            </button>
+                        </form>
+                        
+                        <form method="POST" action="{{ url_for('get_hint') }}" style="display: inline;">
+                            <input type="hidden" name="hint_type" value="言語">
+                            <button type="submit" class="btn btn-hint"
+                                    {% if '言語' in session.hints_used %}disabled{% endif %}>
+                                🗣️ 言語
+                            </button>
+                        </form>
+                    </div>
+                    
+                    {% if session.current_hint %}
+                        <div class="hint-display">
+                            {{ session.current_hint }}
+                        </div>
+                    {% endif %}
+                </section>
+
+                <!-- 質問セクション -->
+                <section class="game-section">
+                    <h3>❓ 質問 (はい/いいえ形式)</h3>
+                    
+                    {% if session.questions_left > 0 %}
+                        <form method="POST" action="{{ url_for('ask_question') }}" class="question-form">
+                            <div class="input-group">
+                                <input type="text" name="question" 
+                                       placeholder="例: この国はアジアにありますか？" 
+                                       required class="input-field">
+                                <button type="submit" class="btn btn-primary">📤 質問する</button>
+                            </div>
+                        </form>
+                    {% else %}
+                        <p class="warning">質問回数が残っていません</p>
+                    {% endif %}
+
+                    <!-- 質問履歴 -->
+                    {% if session.question_log %}
+                        <div class="question-log">
+                            <h4>📋 質問履歴</h4>
+                            <div class="log-content">
+                                {% for log in session.question_log %}
+                                    <div class="log-entry">{{ log }}</div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                </section>
+
+                <!-- 回答セクション -->
+                <section class="game-section">
+                    <h3>🎯 回答</h3>
+                    
+                    {% if session.answers_left > 0 %}
+                        <form method="POST" action="{{ url_for('submit_answer') }}" class="answer-form">
+                            <div class="input-group">
+                                <input type="text" name="answer" 
+                                       placeholder="国名を日本語で入力してください（例：日本）" 
+                                       required class="input-field">
+                                <button type="submit" class="btn btn-success">✅ 回答する</button>
+                            </div>
+                        </form>
+                    {% else %}
+                        <p class="warning">回答回数が残っていません</p>
+                    {% endif %}
+                </section>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
