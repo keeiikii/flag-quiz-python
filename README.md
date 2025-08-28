@@ -4,10 +4,11 @@
 [![Flask](https://img.shields.io/badge/Flask-2.3.3-green.svg)](https://flask.palletsprojects.com/)
 [![Gemini](https://img.shields.io/badge/Gemini-2.0%20Flash-purple.svg)](https://ai.google.dev/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Deploy](https://img.shields.io/badge/Deploy-Render-00f2c3.svg)](https://render.com)
 
 AI搭載の国旗クイズゲーム。Gemini 2.0 Flash APIを活用し、国旗を見て国名を当てるインタラクティブなWebアプリケーションです。
 
-![Game Screenshot](screenshot.png)
+**🚀 ライブデモ**: [https://flag-quiz-python.onrender.com](https://flag-quiz-python.onrender.com)
 
 ## ✨ 特徴
 
@@ -17,6 +18,18 @@ AI搭載の国旗クイズゲーム。Gemini 2.0 Flash APIを活用し、国旗�
 - 🎨 **モダンデザイン** （グラスモーフィズム）
 - 📱 **レスポンシブ対応** （PC・タブレット・スマホ）
 - 🇯🇵 **完全日本語対応**
+- ☁️ **クラウドデプロイ済み** （Render）
+
+## 🎯 プロジェクト概要
+
+このプロジェクトは、以下の技術スキルを実践的に学ぶために開発されたポートフォリオ作品です：
+
+- **バックエンド開発**: Flaskフレームワークを使用したWebアプリケーション構築
+- **AI統合**: Google Gemini APIとの連携による対話型機能の実装
+- **フロントエンド**: モダンなCSS（グラスモーフィズム）とレスポンシブデザイン
+- **クラウドデプロイ**: Renderを使用した本格的なWebサービス公開
+- **API設計**: 外部サービス（国旗画像、AI）との統合
+- **セキュリティ**: 環境変数による機密情報管理
 
 ## 🎮 ゲームルール
 
@@ -36,108 +49,47 @@ AI搭載の国旗クイズゲーム。Gemini 2.0 Flash APIを活用し、国旗�
 - 地理・文化・政治に関する一般的な質問のみ
 - 国名を直接聞く質問は無効
 
-## 🚀 クイックスタート
-
-### 必要環境
-- Python 3.7以上
-- Gemini API キー
-
-### インストール
-
-1. **リポジトリをクローン**
-```bash
-git clone https://github.com/yourusername/flag-quiz-python.git
-cd flag-quiz-python
-```
-
-2. **依存関係をインストール**
-```bash
-pip install -r requirements.txt
-```
-
-3. **環境変数を設定**
-```bash
-# Windows
-set GEMINI_API_KEY=your_gemini_api_key_here
-
-# macOS/Linux
-export GEMINI_API_KEY=your_gemini_api_key_here
-```
-
-4. **アプリケーションを起動**
-```bash
-python app.py
-```
-
-5. **ブラウザでアクセス**
-```
-http://localhost:5000
-```
-
-## 🌐 デプロイ
-
-### Renderデプロイ
-
-1. **Renderアカウント作成**: [render.com](https://render.com)でアカウント作成
-
-2. **新しいWebサービス作成**:
-   - "New" → "Web Service"
-   - GitHubリポジトリを接続
-   - 以下の設定を入力：
-
-3. **Render設定**:
-   ```
-   Name: flag-quiz-python
-   Environment: Python 3
-   Build Command: pip install -r requirements.txt
-   Start Command: gunicorn --bind 0.0.0.0:$PORT app:app
-   ```
-
-4. **環境変数設定**:
-   ```
-   GEMINI_API_KEY = your-gemini-api-key-here
-   FLASK_ENV = production
-   SECRET_KEY = your-secret-key-here
-   ```
-
-5. **デプロイ実行**: "Create Web Service"をクリック
-
-### ライブデモ
-- 🔗 **デモURL**: https://flag-quiz-python.onrender.com *(デプロイ後に更新)*
-
-```
-
 ## 🛠️ 技術スタック
 
 ### バックエンド
-- **Flask** - Webフレームワーク
-- **Google Gemini 2.0 Flash** - AI質問回答
-- **flagcdn.com** - 国旗画像データ
+- **Flask 2.3.3** - 軽量で高速なWebフレームワーク
+- **Google Gemini 2.0 Flash** - 最新のAI質問回答API
+- **flagcdn.com** - 高品質な国旗画像データソース
+- **Gunicorn** - 本番環境用WSGIサーバー
 
 ### フロントエンド
-- **HTML5** - マークアップ
-- **CSS3** - スタイリング（グラスモーフィズム）
+- **HTML5** - セマンティックなマークアップ
+- **CSS3** - モダンなスタイリング（グラスモーフィズム、CSS Grid、Flexbox）
 - **Google Fonts** - Poppins、Playfair Display
+- **レスポンシブデザイン** - モバイルファーストアプローチ
 
-### 主要機能
-- セッションベースの状態管理
-- リアルタイムAI応答
-- レスポンシブデザイン
-- エラーハンドリング
+### インフラ・デプロイ
+- **Render** - クラウドプラットフォーム
+- **環境変数管理** - セキュアな設定管理
+- **自動デプロイ** - GitHub連携によるCI/CD
+
+### 主要機能・アーキテクチャ
+- **セッションベースの状態管理** - Flask-Sessionによる安全なゲーム状態管理
+- **リアルタイムAI応答** - 非同期処理による高速なAI応答
+- **エラーハンドリング** - 包括的なエラー処理とユーザーフレンドリーなメッセージ
+- **セキュリティ** - CSRF保護、入力検証、XSS対策
 
 ## 📁 プロジェクト構造
 
 ```
-flag-quiz-game/
-├── app.py                 # メインアプリケーション
+flag-quiz-python/
+├── app.py                 # メインアプリケーション（Flask）
 ├── requirements.txt       # Python依存関係
-├── requirements.md        # 要件定義書
+├── requirements.md        # 詳細な要件定義書
 ├── README.md             # このファイル
+├── render.yaml           # Renderデプロイ設定
+├── .gitignore            # Git除外設定
+├── LICENSE               # MITライセンス
 ├── static/
-│   └── style.css         # スタイルシート
+│   └── style.css         # モダンなスタイルシート
 └── templates/
-    ├── index.html        # ホームページ
-    └── game.html         # ゲームページ
+    ├── index.html        # ホームページ（ゲーム開始画面）
+    └── game.html         # ゲームプレイ画面
 ```
 
 ## 🎯 使用方法
@@ -158,15 +110,68 @@ flag-quiz-game/
 - 正解時：おめでとうメッセージ
 - 不正解時：正解の表示とゲーム終了
 
-## 🔧 カスタマイズ
+## 🔧 開発者向け情報
 
-### デザイン変更
-`static/style.css` を編集してデザインをカスタマイズできます。
+### ローカル環境での実行
+開発やカスタマイズを行いたい場合は、以下の手順でローカル環境を構築できます：
 
-### 機能拡張
-- 新しいヒント種類の追加
-- 難易度システムの実装
-- スコア機能の追加
+1. **リポジトリをクローン**
+```bash
+git clone https://github.com/yourusername/flag-quiz-python.git
+cd flag-quiz-python
+```
+
+2. **仮想環境を作成・有効化**
+```bash
+# Windows
+python -m venv venv
+venv\Scripts\activate
+
+# macOS/Linux
+python3 -m venv venv
+source venv/bin/activate
+```
+
+3. **依存関係をインストール**
+```bash
+pip install -r requirements.txt
+```
+
+4. **環境変数を設定**
+```bash
+# Windows
+set GEMINI_API_KEY=your_gemini_api_key_here
+
+# macOS/Linux
+export GEMINI_API_KEY=your_gemini_api_key_here
+```
+
+5. **アプリケーションを起動**
+```bash
+python app.py
+```
+
+6. **ブラウザでアクセス**
+```
+http://localhost:5000
+```
+
+### カスタマイズ・拡張
+- **デザイン変更**: `static/style.css` を編集
+- **機能拡張**: 難易度システム、スコア機能、カテゴリ別クイズ等
+- **技術的拡張**: データベース統合、API拡張、テスト自動化等
+
+## 🚀 パフォーマンス・スケーラビリティ
+
+### 現在の実装
+- **軽量なFlaskアプリケーション**: 高速なレスポンス
+- **静的アセット最適化**: CSS・HTMLの効率的な配信
+- **セッション管理**: メモリ効率の良い状態管理
+
+### 将来の改善点
+- **CDN統合**: 画像・CSSの高速配信
+- **キャッシュ戦略**: Redis等による高速化
+- **ロードバランシング**: 複数インスタンスでの負荷分散
 
 ## 🤝 貢献
 
@@ -178,22 +183,41 @@ flag-quiz-game/
 4. プッシュ (`git push origin feature/amazing-feature`)
 5. プルリクエスト作成
 
+### 貢献のガイドライン
+- コードスタイルの統一（PEP 8準拠）
+- 適切なコメントとドキュメント
+- テストの追加・更新
+- セキュリティの考慮
+
 ## 📝 ライセンス
 
 このプロジェクトはMITライセンスの下で公開されています。詳細は [LICENSE](LICENSE) ファイルをご覧ください。
 
 ## 🙏 謝辞
 
-- [Google Gemini AI](https://ai.google.dev/) - AI機能
-- [flagcdn.com](https://flagcdn.com/) - 国旗画像データ
-- [Google Fonts](https://fonts.google.com/) - フォント
+- [Google Gemini AI](https://ai.google.dev/) - 最先端のAI機能
+- [flagcdn.com](https://flagcdn.com/) - 高品質な国旗画像データ
+- [Google Fonts](https://fonts.google.com/) - 美しいフォント
+- [Render](https://render.com/) - 優れたクラウドプラットフォーム
 
-## 📞 お問い合わせ
+## 📞 お問い合わせ・フィードバック
 
 質問やフィードバックがある場合は、以下までお気軽にご連絡ください：
 
-- GitHub Issues: [Issues Page](https://github.com/yourusername/flag-quiz-python/issues)
+- **GitHub Issues**: [Issues Page](https://github.com/yourusername/flag-quiz-python/issues)
+- **プロジェクトページ**: [https://flag-quiz-python.onrender.com](https://flag-quiz-python.onrender.com)
+
+## 🌟 今後の展望
+
+このプロジェクトは継続的に改善・拡張される予定です：
+
+- **多言語対応**: 英語・中国語等の追加
+- **モバイルアプリ**: React Native版の開発
+- **AI機能強化**: より高度な質問応答システム
+- **コミュニティ機能**: ユーザー間の交流機能
 
 ---
 
 ⭐ このプロジェクトが気に入ったら、ぜひスターを付けてください！
+
+**🔗 ライブデモ**: [https://flag-quiz-python.onrender.com](https://flag-quiz-python.onrender.com)
